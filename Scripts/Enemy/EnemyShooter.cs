@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// this class is to create a enemy shooter that would follow ,shot and run 
 public class EnemyShooter : Mover
 {
     
@@ -25,6 +25,8 @@ public class EnemyShooter : Mover
     private float timeBtwShot;
     public float startTimeBtwShot;
     [SerializeField] private GameObject projectile;
+    // like all enemies we have to get the player psoition in the game world inorder to track and follow the player 
+    // we also assign the the hitbox for the enmey to register hits form the player and hit the player and create a wait time between shots
 
     protected override void Start()
     {
