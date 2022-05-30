@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+// use to creet floating text object to be used in the Floating text manager 
 public class FloatingText 
 {
     public bool active;
@@ -9,20 +9,20 @@ public class FloatingText
     public Vector3 motion;
     public float duration;
     public float lastShown;
-
+    // the show method display text to a certain amount of time
     public void Show()
     {
         active = true;
         lastShown = Time.time;
         go.SetActive(active);
     }
-    
+     // the hide method hide displayed text  
     public void Hide()
     {
         active = false;
         go.SetActive(active);
     }
-
+ 
     public void UpdateFloatingText()
     {
         if (!active)
