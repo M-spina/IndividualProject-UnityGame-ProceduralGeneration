@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+// this class create a protal that when collided by the player it chnages scene and save current data
 public class Portal : Collidable
 {
     public string[] sceneNames;
