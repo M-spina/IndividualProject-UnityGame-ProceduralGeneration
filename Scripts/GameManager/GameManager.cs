@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// Game manager handles a good majority of sub features in the game 
+//and instances of game manager can be called to run certain methods required for class to perform their functions
 
 public class GameManager : MonoBehaviour
 {
+// we first create a create a static GameManager instance so that other class can have acces to the same GameManger 
     public static GameManager instance;
     private void Awake()
     {
@@ -72,7 +75,7 @@ public class GameManager : MonoBehaviour
     // upgrade Weapon
     public bool TryUpgradeWeapon()
     {
-        // is weapon maxed 
+        // is weapon maxed  if not then we call the weapon upgrade method and returns a true bool 
         if (WeponPrices.Count <= weapon.weaponLevel)
             return false;
         if (coins >= WeponPrices[weapon.weaponLevel])
@@ -125,27 +128,27 @@ public class GameManager : MonoBehaviour
 
         return exp; // returns the amount
     }
-    public void GrantExp(int xp)
-    {
+    public void GrantExp(int xp) // when the player kills an enemy it grants exp and this is used to to add teh exp to that total exp and check if we can level up 
+    { // and check if we can level up and if so we run the GmOnLevelUp method
         int currLevel = GetCurrentLevel();
         exp += xp;
         if (currLevel < GetCurrentLevel())
             GmOnLevelUp();
 
     }
-    public void GmOnLevelUp()
+    public void GmOnLevelUp() // This method calls the player  on level up method to level up the player 
     {
         
         Debug.Log("Level Up !");
         player.OnLevelUp();
     }
-    // Scene Loaded
+    // Scene Loaded, when a new sceen is loaded the player would spawn at the spawn point of the new sceen
 
     public void OnSceneLoaded(Scene s, LoadSceneMode mode)
     {
         player.transform.position = GameObject.Find("SpawnPoint").transform.position;
     }
-    // DeathMenu/ Respawn
+    // DeathMenu/ Respawn, when the player respawn we want to hid the death screen and load the start of the game to spawn the player
     public void Respawn()
     {
         deathMenuAnime.SetTrigger("Hide");
