@@ -46,7 +46,7 @@ public static class PGA  // this class is the procedural generation Algorithm cl
 
         return corridor;
     }
-    
+    //(IMPORTANT THIS METHOD IS NO LONGER BEING USED -- AND WILL BE REMOVED. THIS ALGORITHM DID NOT WORK)
     // creating a BinarySpacePartition to create rooms by have a space to split into room that are or a certain size
 
     public static List<BoundsInt> BinarySpacePartitioning(BoundsInt spaceToSplit,int minWidth,int minHeight)
@@ -95,7 +95,7 @@ public static class PGA  // this class is the procedural generation Algorithm cl
         }
         return roomsList;
     }
-
+//(IMPORTANT THIS METHOD IS NO LONGER BEING USED -- AND WILL BE REMOVED. THIS ALGORITHM DID NOT WORK))
     private static void SplitVertically(int minWidth, Queue<BoundsInt> roomsQueue, BoundsInt room)
     {
         var xSplit = Random.Range(1, room.size.x);
@@ -107,7 +107,7 @@ public static class PGA  // this class is the procedural generation Algorithm cl
         roomsQueue.Enqueue(room2);
 
     }
-
+//(IMPORTANT THIS METHOD IS NO LONGER BEING USED -- AND WILL BE REMOVED. THIS ALGORITHM DID NOT WORK)
     private static void SplitHorizontally(int minHeight, Queue<BoundsInt> roomsQueue, BoundsInt room)
     {
         var ySplit = Random.Range(1, room.size.y); //  (minHeight , room.size.y - minHeight) // this would create gid like structure rather than random rooms
@@ -119,10 +119,11 @@ public static class PGA  // this class is the procedural generation Algorithm cl
         roomsQueue.Enqueue(room2);
     }
 }
-
+// we create a static class so that otheer class can use its data an methdos ot get a random cardinal direction
+// this is used to move the agent in the PCG algorithm .
 public static class Direction2D
 {
-    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
+    public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int> /// store a list of direction that can be added to the current position of an agent to move
     {
         new Vector2Int(0,1), //UP
         new Vector2Int(1,0), //RIGHT
@@ -130,7 +131,7 @@ public static class Direction2D
         new Vector2Int(-1, 0) //LEFT
     };
 
-    public static Vector2Int GetRandomCardinalDirection()
+    public static Vector2Int GetRandomCardinalDirection() // retruns a radnomly selected direction form the list of cardinal directions
     {
         return cardinalDirectionsList[Random.Range(0, cardinalDirectionsList.Count)];
     }
