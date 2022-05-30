@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// this class handles UI elements in the game 
 
 public class CharacterMenu : MonoBehaviour
 {
@@ -32,7 +33,8 @@ public class CharacterMenu : MonoBehaviour
         //DontDestroyOnLoad(gameObject); // when the game starts or change scene the game manager would remain
     }
     
-    // Character Selection
+    // Character Selection: when we click a button in the menu we swap out the current player sprite to another sprite in the list of Player sprites 
+    // this method only work with the sprite displayed on the menu and not attually chages the sprite in game didnt have time to create walk animatin for the new sprite loaded in.
     public void OnButtonClick(bool right)
     {
         if (right)
@@ -60,7 +62,7 @@ public class CharacterMenu : MonoBehaviour
     }
 
 
-    //Weapon Upgrade
+    //Weapon Upgrade: when a button that calls this method is click it will call the TryUpgradeWeapon() method form th game manager and and then update the menu to refect the change 
 
     public void OnUpgradeClick()
     {
@@ -68,27 +70,27 @@ public class CharacterMenu : MonoBehaviour
             UpdateMenu();
     }
     
-    // update Character info 
+    // update Character info : this updates all the varibles in the menu and check if certain methods should stop being called.
     public void UpdateMenu()
     {
         // wep
         weaponSprite.sprite = GameManager.instance.WeponSprites[GameManager.instance.weapon.weaponLevel];
-        if(GameManager.instance.weapon.weaponLevel == GameManager.instance.WeponPrices.Count)
+        if(GameManager.instance.weapon.weaponLevel == GameManager.instance.WeponPrices.Count) // if the current weapon is the last in the array of weapon sprites it is the max weapon and text is displayed to show that there are no more upgades
             UpgardeCostText.text = "MAX";
-        else
+        else // else if the weapon is not the max level it displays the pirce for the next level
         {
             UpgardeCostText.text = GameManager.instance.WeponPrices[GameManager.instance.weapon.weaponLevel].ToString();
         }
             
     
-        //meta
+        //meta: this is use to display variable we want to show in the UI menu as text like health, exp  and coins 
         LevelText.text = GameManager.instance.GetCurrentLevel().ToString();
         hitPointText.text = GameManager.instance.player.hitpoint.ToString() + " / " + GameManager.instance.player.maxHitpoint.ToString();
         CoinText.text = GameManager.instance.coins.ToString();
         
         // exp Bar
         int currentLevel = GameManager.instance.GetCurrentLevel();
-          // check if max level
+          // check if max level. if the player is at max level it will display the total amount to exp gained.
         if (currentLevel == GameManager.instance.expTable.Count)
         {
             ExpText.text = GameManager.instance.exp.ToString() + " total exp points"; // display exp
@@ -96,7 +98,7 @@ public class CharacterMenu : MonoBehaviour
         }
         else
         {
-            // getting the ratio of what we have and what we have to reach 
+            // getting the ratio of what we have and what we have to reach this will change the exp bar to show that the player is making progress
             int prevLevelExp = GameManager.instance.GetExpToLevel(currentLevel - 1);
             int currLevelExp = GameManager.instance.GetExpToLevel(currentLevel);
 
