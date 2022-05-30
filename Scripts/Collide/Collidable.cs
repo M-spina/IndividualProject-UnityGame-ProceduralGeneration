@@ -20,9 +20,9 @@ public class Collidable : MonoBehaviour
     protected virtual void Update()
     {
         
-        // collision work
+        // collision work by checking if the is a collider over lap between the collider of this object and any other game object
         _boxCollider.OverlapCollider(filter, hits);
-        for (int i = 0; i < hits.Length; i++)
+        for (int i = 0; i < hits.Length; i++) // we also want to free this array when nothing is touching so that other object can enter the array
         {
             if (hits[i] == null)
             {
@@ -35,7 +35,7 @@ public class Collidable : MonoBehaviour
     }
 
 
-    protected virtual void OnCollide(Collider2D coll)
+    protected virtual void OnCollide(Collider2D coll) // this a method that tells us that the an object doesnt have a on collide methos
     {
         Debug.Log("OnCollide was not implemented in " + this.name);
     }
