@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+// this class handles weapon actions and  stores damage and push force of upgraded weapons 
 
 public class Weapon : Collidable
 {
@@ -24,21 +25,21 @@ public class Weapon : Collidable
     public AudioSource slashSoundEffects;
 
     
-
+    // calls the base start method form the overriden method and set the animator to the animator component of the gamobjects 
     protected override void Start()
     {
         base.Start();
         //_spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
-
+    // calls the base update method form the overriden method and check to see if the correct key is presed to swing the weapon and play the animaition
     protected override void Update()
     {
         base.Update();
         // know when we are able to swing 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Time.time - lastSwing > coolDown)
+            if (Time.time - lastSwing > coolDown) // we dont want to swing every frame the update id being called so we a cool down timer to swing the weapon after the cool down timer 
             {
                 slashSoundEffects.Play();
                 lastSwing = Time.time;
@@ -46,7 +47,7 @@ public class Weapon : Collidable
             }
         }
     }
-
+    // checks collision to not do anything if the collider hits the player but would creeat a damage object to send to another collidable game object to damage them 
     protected override void OnCollide(Collider2D coll)
     {
         if (coll.tag == "Fighter")
@@ -71,14 +72,14 @@ public class Weapon : Collidable
         
         
     }
-
+    // plays the swing animation
     private void Swing()
     {
         //Debug.Log("Swing");
         anim.SetTrigger("Swing");
         
     }
-
+    // when the weapon is upgrade uing the UI menu button this class is called to change weapon sprites and increment the weapon level.
     public void UpgradeWeapon()
     {
         weaponLevel++;
@@ -86,7 +87,7 @@ public class Weapon : Collidable
         
         //change stats
     }
-
+    // used to set the weapon level upon loading the new scene
     public void SetWeaponLevel(int level)
     {
         weaponLevel = level;
