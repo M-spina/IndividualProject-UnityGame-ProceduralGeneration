@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// this class is only used to set an object Transform component the same as the spaen point
 public class SpawnPoint : MonoBehaviour
 {
     private Transform target;

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+// this class creates the algorithm for the procedually generated dungeon long with some level content 
+// this class also inherits form SimpleRandomWalkLevelGeneration which is the algorithm used to create ranodm rooms this usefull to have access as 
+// we want to create rooms along the corridor of our algorithm.
 public class CorridorFirstLevelGeneration : SimpleRandomWalkLevelGeneration
 {
     [SerializeField]
@@ -22,7 +24,9 @@ public class CorridorFirstLevelGeneration : SimpleRandomWalkLevelGeneration
     public GameObject[] enemies;
     private GameObject[] enemyList;
 
-
+    //(IMPORTANT THIS COMMENTED OUT METHOD IS USED TO CREATE NEW procedually generated dungeon WHEN THE GAME LOADS THE SCENE )
+    //(IF YOU WANT THE GAME TO PRODCUE RANDOM LEVEL WHEN THE PLAYER SPAWN INTO A SCENEN UNCOMMENT THIS)
+    
     //private void Start()
     //{
         //RunProceduralGeneration();
@@ -66,16 +70,16 @@ public class CorridorFirstLevelGeneration : SimpleRandomWalkLevelGeneration
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         WallGenerator.CreateWalls(floorPositions,tilemapVisualizer);
     }
-
+// using the list of dead ened we are abble to create room at these position 
     private void CreateRoomsAtDeadEnd(List<Vector2Int> deadEnd, HashSet<Vector2Int> roomFloors)
     {
         foreach (var position in deadEnd)
         {
             // if the is no dead end position in the the position where rooms are at then we create a room
             if (roomFloors.Contains(position) == false)
-            {
+            { // we create a room using the RunRandomWalk method we inherited form SimpleRandomWalkLevelGeneration that gnereates random rooms 
                 var room = RunRandomWalk(randomWalkParameters, position);
-                roomFloors.UnionWith(room);
+                roomFloors.UnionWith(room);// we then store this room in the roomfloor HashSet to prevent any other room from being placed there
             }
         }
     }

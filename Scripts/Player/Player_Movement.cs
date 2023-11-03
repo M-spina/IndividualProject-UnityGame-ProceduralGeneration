@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// this class is used to perform spceific player actions and inhertes form the move class that handles movement and collisions 
 public class Player_Movement : Mover
 {
      //private BoxCollider2D boxCollider;
@@ -22,11 +22,12 @@ public class Player_Movement : Mover
      
      protected override void Start()
      {
-         base.Start();
+         base.Start(); // we call the base start method form mover and also get the assing the animator to the animator compnent of the object.
          _animator = GetComponent<Animator>();
          //DontDestroyOnLoad(gameObject);
      }
-
+// this method handles the ReceiveDamage by other game objects. This takes in the damage objects that are created by enemeis when they hit the player 
+//This would call the an  intance of GameManager that handles the health change of game object inlcuding the player, As long as the player is alive. 
      protected override void ReceiveDamage(Damage dmg)
      {
          if(!Alive)
@@ -37,7 +38,7 @@ public class Player_Movement : Mover
          GameManager.instance.OnHealthChange();
          
      }
-
+     // the death method is overriden and set the variable Alive to flace this would cause the GameManager to trigger the death screen.
      protected override void Death()
      {
          Alive = false;
@@ -45,7 +46,8 @@ public class Player_Movement : Mover
          deathSoundEffects.Play();
      }
 
-
+     // Fixed Update is called a fixed number of times every second  and it handles the player animator to runn the correct animator when moving
+     // it also stops movement whe the method detects the player as dead.
      private void FixedUpdate()
     {
         _movement.x = Input.GetAxisRaw("Horizontal");
@@ -63,25 +65,26 @@ public class Player_Movement : Mover
         
         //throw new NotImplementedException();
     }
-
+     // handles what the level up method will do when called. This is called in the Game Manager when the game manager detcets that enough exp is gain to level the player up 
     public void OnLevelUp()
     {
         //Debug.Log("mass");
         //maxHitpoint++;
         
-        maxHitpoint = levelHealth[level];
+        maxHitpoint = levelHealth[level]; // we increse our maxHit points a set amount  and heal our the player to max health, aslos inceasung the player level
         level++;
         
         hitpoint = maxHitpoint;
         GameManager.instance.OnHealthChange();
     }
-
+    // set the level of the player when the game loads by checking the perbiusly stored current level and updating the  new level
     public void SetLevel(int level)
     {
         for(int i = 0; i < level; i++)
             OnLevelUp();
     }
-
+   // when the player dies they must be respawned so this method adust player stats to respawn the player by setting it health point to full and 
+   // making the payer invincible for a bit to prevent pile on damage and push force.
     public void respawn()
     {
         //hitpoint = maxHitpoint;
@@ -92,7 +95,7 @@ public class Player_Movement : Mover
     }
 
     
-
+     // handles the player healing mathod that is called whenthe player collides with a healing point  this heals the player up to max  and displays text to note that the player is being healed
     public void Heal(int healingAmount)
     {
         if(hitpoint == maxHitpoint)

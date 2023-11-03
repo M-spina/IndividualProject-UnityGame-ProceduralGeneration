@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// this class manages the Floating text objects
 public class FloatingTextManager : MonoBehaviour
 {
     public GameObject textContainer;
@@ -15,14 +15,14 @@ public class FloatingTextManager : MonoBehaviour
     {
        // DontDestroyOnLoad(transform.parent.gameObject);
     }
-
+    // we have an array of text that we can store and we want to cycle through them to display the when they are called
     private void Update()
     {
         foreach(FloatingText txt in _floatingTexts)// for every txt in the array we want to call this function
             txt.UpdateFloatingText();
         
     }
-
+    // this method is used to create and show floating text given the parameter are correct
     public void Show(string msg, int fontsize, Color colour, Vector3 pos, Vector3 motion, float duration)
     {
         FloatingText floatingText = GetFloatingText();
@@ -44,7 +44,7 @@ public class FloatingTextManager : MonoBehaviour
 
         if (txt == null) // if we dont find an inactive txt we need to create one so it wouldn't crash
         {
-            // we are creating a new game-object and assigning to txt.go 
+            // we are creating a new game-object and assigning to txt this is used to display the gameobject as a text in the game world
             txt = new FloatingText();
             txt.go = Instantiate(textPrefab);
             txt.go.transform.SetParent(textContainer.transform);
